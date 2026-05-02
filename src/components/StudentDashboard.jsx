@@ -8,6 +8,8 @@ import {
 } from 'lucide-react';
 import myPhoto from '../assets/me.jpg';
 
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : '';
+
 const loadRazorpay = () => {
   return new Promise((resolve) => {
     const script = document.createElement('script');
@@ -37,8 +39,8 @@ const StudentDashboard = () => {
 
   const fetchData = async (token) => {
     try {
-      const profRes = await axios.get('http://localhost:5000/api/student/profile', { headers: { Authorization: token } });
-      const payRes = await axios.get('http://localhost:5000/api/student/payments', { headers: { Authorization: token } });
+      const profRes = await axios.get(`${API_URL}/api/student/profile`, { headers: { Authorization: token } });
+      const payRes = await axios.get(`${API_URL}/api/student/payments`, { headers: { Authorization: token } });
       setProfile(profRes.data);
       setPayments(payRes.data);
       
@@ -70,7 +72,7 @@ const StudentDashboard = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const order = await axios.post('http://localhost:5000/api/create-order', 
+      const order = await axios.post(`${API_URL}/api/create-order`, 
         { amount: profile.fee.amount }, 
         { headers: { Authorization: token } }
       );
@@ -84,7 +86,7 @@ const StudentDashboard = () => {
         order_id: order.data.id,
         handler: async function (response) {
           try {
-            await axios.post('http://localhost:5000/api/verify-payment', {
+            await axios.post(`${API_URL}/api/verify-payment`, {
               ...response,
               amount: profile.fee.amount,
               program: profile.program

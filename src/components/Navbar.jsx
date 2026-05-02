@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -25,9 +26,9 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="container nav-container">
-        <a href="/#home" className="logo">
+        <Link to="/#home" className="logo">
           <span className="text-red">ELITE</span> KARATE
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <ul className="nav-links">
@@ -37,10 +38,10 @@ const Navbar = () => {
             </li>
           ))}
           <li>
-            <a href="/login" className="btn btn-outline btn-sm" style={{ marginRight: '10px' }}>Login</a>
+            <Link to="/login" className="btn btn-outline btn-sm" style={{ marginRight: '10px' }}>Login</Link>
           </li>
           <li>
-            <a href="/#contact" className="btn btn-primary btn-sm">Join Now</a>
+            <Link to="/#contact" className="btn btn-primary btn-sm">Join Now</Link>
           </li>
         </ul>
 
@@ -67,10 +68,10 @@ const Navbar = () => {
             </li>
           ))}
           <li style={{ marginTop: '1rem' }}>
-            <a href="/login" className="btn btn-outline btn-sm w-100" onClick={() => setIsMobileMenuOpen(false)}>Login</a>
+            <Link to="/login" className="btn btn-outline btn-sm w-100" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
           </li>
           <li>
-            <a href="/#contact" className="btn btn-primary btn-sm w-100" onClick={() => setIsMobileMenuOpen(false)}>Join Now</a>
+            <Link to="/#contact" className="btn btn-primary btn-sm w-100" onClick={() => setIsMobileMenuOpen(false)}>Join Now</Link>
           </li>
         </ul>
       </div>

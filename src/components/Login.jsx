@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : '';
 
 const Login = () => {
   const [role, setRole] = useState('student');
@@ -12,7 +15,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/login', { username, password });
+      const res = await axios.post(`${API_URL}/api/login`, { username, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       
@@ -22,7 +25,8 @@ const Login = () => {
         navigate('/student');
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      console.error('Login error:', err);
+      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
     }
   };
 
@@ -30,9 +34,10 @@ const Login = () => {
     <section className="section bg-black" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center' }}>
       <div className="container" style={{ maxWidth: '500px' }}>
         <div className="bg-dark p-4 border-radius-8 login-card" style={{ borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
-          <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: '2rem' }}>
+          <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: '1rem', left: 0, transform: 'none' }}>
             <span className="text-red">Portal</span> Login
           </h2>
+          <p className="text-gray" style={{ textAlign: 'center', marginBottom: '2rem' }}>Sign in to your academy dashboard</p>
           
           <div className="flex gap-2" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
             <button 
@@ -74,6 +79,10 @@ const Login = () => {
             </div>
             <button type="submit" className="btn btn-primary w-100">Login to Dashboard</button>
           </form>
+          
+          <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+            <Link to="/" className="text-gold" style={{ fontSize: '0.9rem' }}>← Back to Website</Link>
+          </div>
         </div>
       </div>
     </section>

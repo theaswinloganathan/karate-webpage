@@ -7,6 +7,8 @@ import {
   UserPlus, Edit, Trash2, LogOut, Award, Clock, Trophy, Upload
 } from 'lucide-react';
 
+const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : '';
+
 const MasterDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [students, setStudents] = useState([]);
@@ -40,8 +42,8 @@ const MasterDashboard = () => {
 
   const fetchData = async (token) => {
     try {
-      const stuRes = await axios.get('http://localhost:5000/api/students', { headers: { Authorization: token } });
-      const feeRes = await axios.get('http://localhost:5000/api/fees/all', { headers: { Authorization: token } });
+      const stuRes = await axios.get(`${API_URL}/api/students`, { headers: { Authorization: token } });
+      const feeRes = await axios.get(`${API_URL}/api/fees/all`, { headers: { Authorization: token } });
       setStudents(stuRes.data);
       setFees(feeRes.data);
       
@@ -61,7 +63,7 @@ const MasterDashboard = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/students', 
+      await axios.post(`${API_URL}/api/students`, 
         { name, belt_level: belt, program, username, password },
         { headers: { Authorization: token } }
       );
@@ -77,7 +79,7 @@ const MasterDashboard = () => {
   const updateBelt = async (id, newBelt) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/students/${id}/belt`, 
+      await axios.put(`${API_URL}/api/students/${id}/belt`, 
         { belt_level: newBelt },
         { headers: { Authorization: token } }
       );
@@ -91,7 +93,7 @@ const MasterDashboard = () => {
     if (!window.confirm('Are you sure you want to permanently delete this student?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/students/${id}`, { headers: { Authorization: token } });
+      await axios.delete(`${API_URL}/api/students/${id}`, { headers: { Authorization: token } });
       fetchData(token);
     } catch (err) {
       alert('Error deleting student');
