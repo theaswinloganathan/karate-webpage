@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.port === '5173') ? 'http://localhost:5000' : '';
 
 const Login = () => {
   const [role, setRole] = useState('student');
@@ -16,6 +16,7 @@ const Login = () => {
     e.preventDefault();
     const cleanUsername = username.trim();
     const cleanPassword = password.trim();
+    console.log('Attempting login to:', `${API_URL}/api/login`, { username: cleanUsername });
     try {
       const res = await axios.post(`${API_URL}/api/login`, { username: cleanUsername, password: cleanPassword });
       localStorage.setItem('token', res.data.token);

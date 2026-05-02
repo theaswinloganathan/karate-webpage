@@ -100,11 +100,22 @@ const isMaster = (req, res, next) => {
 // --- AUTH ROUTES ---
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
+  console.log('Login attempt for username:', username);
   db.get("SELECT * FROM users WHERE username = ?", [username], (err, user) => {
-    if (err || !user) return res.status(400).json({ error: 'User not found' });
+    if (err) {
+      console.error('DB Error:', err.message);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    if (!user) {
+      console.log('User not found:', username);
+      return res.status(400).json({ error: 'User not found' });
+    }
     
     const validPass = bcrypt.compareSync(password, user.password);
-    if (!validPass) return res.status(400).json({ error: 'Invalid password' });
+    if (!validPass) {
+      console.log('Invalid password for user:', username);
+      return res.status(400).json({ error: 'Invalid password' });
+    }
 
     const token = jwt.sign({ id: user.id, role: user.role, student_id: user.student_id }, process.env.JWT_SECRET || 'secret');
     res.json({ token, role: user.role, student_id: user.student_id });
