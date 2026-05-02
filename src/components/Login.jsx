@@ -30,38 +30,26 @@ const Login = () => {
           
           <div className="demo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
             <div 
-              className="demo-login-box" 
+              className="premium-card card-3d card-glass animate-slide-up" 
               onClick={() => handleDemoLogin('master')}
-              style={{ 
-                padding: '2rem', 
-                background: 'rgba(255,255,255,0.03)', 
-                borderRadius: '12px', 
-                cursor: 'pointer',
-                textAlign: 'center',
-                transition: 'all 0.3s ease',
-                border: '1px solid rgba(255,255,255,0.05)'
-              }}
+              style={{ cursor: 'pointer', textAlign: 'center' }}
             >
-              <Shield size={50} className="text-red mb-3" style={{ margin: '0 auto 1rem' }} />
-              <h3 className="text-white">Master Portal</h3>
+              <div className="stat-icon-glow" style={{ marginBottom: '1.5rem' }}>
+                <Shield size={50} />
+              </div>
+              <h3 className="text-white" style={{ fontSize: '1.5rem' }}>Master Portal</h3>
               <p className="text-gray" style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>Management & Admin Tools</p>
             </div>
 
             <div 
-              className="demo-login-box" 
+              className="premium-card card-3d card-gradient-border animate-slide-up" 
               onClick={() => handleDemoLogin('student')}
-              style={{ 
-                padding: '2rem', 
-                background: 'rgba(255,255,255,0.03)', 
-                borderRadius: '12px', 
-                cursor: 'pointer',
-                textAlign: 'center',
-                transition: 'all 0.3s ease',
-                border: '1px solid rgba(255,255,255,0.05)'
-              }}
+              style={{ cursor: 'pointer', textAlign: 'center', animationDelay: '0.1s' }}
             >
-              <UserIcon size={50} className="text-gold mb-3" style={{ margin: '0 auto 1rem' }} />
-              <h3 className="text-white">Student Portal</h3>
+              <div className="stat-icon-glow" style={{ marginBottom: '1.5rem', filter: 'drop-shadow(0 0 10px var(--color-gold))' }}>
+                <UserIcon size={50} className="text-gold" />
+              </div>
+              <h3 className="text-white" style={{ fontSize: '1.5rem' }}>Student Portal</h3>
               <p className="text-gray" style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>Personal Profile & Progress</p>
             </div>
           </div>

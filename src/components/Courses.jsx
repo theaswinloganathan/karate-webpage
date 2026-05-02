@@ -41,16 +41,16 @@ const Courses = () => {
         
         <div className="grid grid-cols-4 course-grid">
           {courses.map((course, index) => (
-            <div key={index} className="course-card">
-              <div className="course-img">
-                <img src={course.image} alt={course.title} />
-                <div className={`belt-tag belt-${course.color}`}></div>
+            <div key={index} className="premium-card card-3d animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="course-img" style={{ borderRadius: '12px', marginBottom: '1.5rem', height: '180px' }}>
+                <img src={course.image} alt={course.title} style={{ borderRadius: '12px' }} />
+                <div className={`belt-tag belt-${course.color}`} style={{ boxShadow: '0 0 15px var(--color-red)' }}></div>
               </div>
-              <div className="course-info">
-                <span className="course-age">{course.age}</span>
-                <h3>{course.title}</h3>
-                <p>{course.desc}</p>
-                <a href="#contact" className="course-link">
+              <div className="course-info" style={{ padding: 0 }}>
+                <span className="badge-pill badge-new" style={{ marginBottom: '1rem', fontSize: '0.7rem' }}>{course.age}</span>
+                <h3 style={{ fontSize: '1.4rem', marginBottom: '0.8rem', color: 'var(--color-white)' }}>{course.title}</h3>
+                <p style={{ fontSize: '0.9rem', color: 'var(--color-gray)', marginBottom: '1.5rem', lineHeight: '1.5' }}>{course.desc}</p>
+                <a href="#contact" className="course-link" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-red)', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.85rem' }}>
                   Enroll Now <ArrowRight size={16} />
                 </a>
               </div>

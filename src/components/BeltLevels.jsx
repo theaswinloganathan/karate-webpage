@@ -38,14 +38,17 @@ const BeltLevels = () => {
         <h4 className="section-subtitle">From Beginner to Black Belt</h4>
         
         <div className="vertical-timeline">
-          <div className="timeline-line"></div>
+          <div className="timeline-line" style={{ background: 'var(--gradient-premium)', opacity: 0.2 }}></div>
           {belts.map((belt, index) => (
             <div key={index} className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
-              <div className={`timeline-badge bg-${belt.color} glow-${belt.color}`}></div>
-              <div className="timeline-card">
-                <div className="belt-duration text-gold">{belt.duration}</div>
-                <h3>{belt.name}</h3>
-                <p>{belt.desc}</p>
+              <div className={`timeline-badge bg-${belt.color} glow-${belt.color}`} style={{ width: '40px', height: '40px', border: '2px solid rgba(255,255,255,0.1)' }}></div>
+              <div className={`timeline-card card-glass card-gradient-border`}>
+                <div className="belt-duration" style={{ color: 'var(--color-gold)', fontWeight: '800', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: 'var(--color-red)' }}></div>
+                  {belt.duration}
+                </div>
+                <h3 style={{ fontSize: '1.6rem', marginBottom: '1rem', color: 'var(--color-white)' }}>{belt.name}</h3>
+                <p style={{ color: 'var(--color-gray)', lineHeight: '1.7' }}>{belt.desc}</p>
               </div>
             </div>
           ))}

@@ -152,28 +152,29 @@ const StudentDashboard = () => {
     <div className="dash-content-area">
       <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Welcome, {profile.name}!</h3>
       <div className="dash-grid-4">
-        <div className="dash-card stat-card">
-          <div className="stat-icon"><CalendarCheck size={30} /></div>
+        <div className="dash-card-premium card-3d">
+          <div className="stat-icon-glow"><CalendarCheck size={30} /></div>
           <div><h4>Classes Attended</h4><h2>45</h2></div>
         </div>
-        <div className="dash-card stat-card">
-          <div className="stat-icon text-green"><TrendingUp size={30} color="#00cc00"/></div>
+        <div className="dash-card-premium card-3d">
+          <div className="stat-icon-glow" style={{ filter: 'drop-shadow(0 0 10px #00cc00)' }}><TrendingUp size={30} color="#00cc00"/></div>
           <div><h4>Attendance %</h4><h2>92%</h2></div>
         </div>
-        <div className="dash-card stat-card">
-          <div className="stat-icon text-gold"><Award size={30} /></div>
+        <div className="dash-card-premium card-3d">
+          <div className="stat-icon-glow" style={{ filter: 'drop-shadow(0 0 10px var(--color-gold))' }}><Award size={30} className="text-gold" /></div>
           <div><h4>Current Belt</h4><h2 style={{ fontSize: '1.2rem', marginTop: '0.5rem' }}>{profile.belt_level}</h2></div>
         </div>
-        <div className="dash-card stat-card" style={{ border: profile.fee?.status === 'paid' ? '1px solid #00cc00' : '1px solid var(--color-red)'}}>
-          <div className="stat-icon text-red"><IndianRupee size={30} /></div>
+        <div className={`dash-card-premium card-3d ${profile.fee?.status !== 'paid' ? 'glow-red-neon' : 'glow-gold-neon'}`}>
+          <div className="stat-icon-glow"><IndianRupee size={30} /></div>
           <div><h4>Fees Status</h4><h2 style={{ fontSize: '1.2rem', marginTop: '0.5rem', color: profile.fee?.status === 'paid' ? '#00cc00' : 'var(--color-red)' }}>{profile.fee?.status?.toUpperCase() || 'UNKNOWN'}</h2></div>
         </div>
       </div>
       
-      <div className="dash-card mt-4" style={{ marginTop: '2rem' }}>
-        <h4 className="mb-3 text-gold" style={{ marginBottom: '1rem' }}>Next Class Schedule</h4>
+      <div className="dash-card-premium card-gradient-border mt-4" style={{ marginTop: '2rem' }}>
+        <h4 className="mb-3 text-gold" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <ClockIcon size={20} /> Next Class Schedule
+        </h4>
         <p className="text-gray" style={{ fontSize: '1.1rem' }}>
-          <Clock size={18} style={{ display: 'inline', marginRight: '8px' }}/>
           Your next <strong>{profile.program}</strong> session is today at <strong>5:00 PM</strong>.
         </p>
       </div>
@@ -225,16 +226,16 @@ const StudentDashboard = () => {
         <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Belt Progress</h3>
         
         <div className="dash-grid-4 grid-cols-2" style={{ marginBottom: '2rem' }}>
-          <div className="dash-card text-center" style={{ padding: '3rem 1rem', background: 'rgba(255,255,255,0.03)' }}>
+          <div className="premium-card card-glass text-center">
             <h4 className="text-gray" style={{ marginBottom: '1rem' }}>Current Belt</h4>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div className={`belt-badge belt-${(profile?.belt_level || 'White').split(' ')[0].toLowerCase()}`} style={{ fontSize: '1.2rem', padding: '0.5rem 1.5rem', marginBottom: '1rem' }}>
+              <div className={`belt-badge belt-${(profile?.belt_level || 'White').split(' ')[0].toLowerCase()}`} style={{ fontSize: '1.2rem', padding: '0.5rem 1.5rem', marginBottom: '1rem', boxShadow: '0 0 20px rgba(255,255,255,0.2)' }}>
                 {profile?.belt_level || 'White Belt'}
               </div>
               <h2 style={{ fontSize: '2.5rem', color: '#fff' }}>{profile?.belt_level || 'White Belt'}</h2>
             </div>
           </div>
-          <div className="dash-card text-center" style={{ padding: '3rem 1rem', border: '1px solid var(--color-gold)' }}>
+          <div className="premium-card card-gradient-border text-center glow-gold-neon">
             <h4 className="text-gold">Next Belt Target</h4>
             <h2 style={{ fontSize: '2.5rem', marginTop: '1rem', color: 'var(--color-gold)' }}>{nextBelt}</h2>
             <p className="mt-2 text-gray" style={{ marginTop: '0.5rem' }}>Estimated Exam: May 25, 2026</p>
@@ -345,40 +346,30 @@ const StudentDashboard = () => {
     return (
       <div className="dash-content-area">
         <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Notifications</h3>
-        <div className="dash-card">
+        <div className="premium-card">
           <ul style={{ listStyle: 'none' }}>
-            {recentComps.map(c => (
-              <li key={`notif-${c.id}`} style={{ padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '1rem' }}>
-                <Trophy className="text-gold" size={24} style={{ flexShrink: 0 }} />
+            {Array.isArray(recentComps) && recentComps.map(c => (
+              <li key={`notif-${c.id}`} className="card-split animate-slide-up" style={{ padding: '1.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                <div className="card-split-icon glow-gold-neon" style={{ background: 'rgba(212, 175, 55, 0.1)' }}>
+                  <Trophy className="text-gold" />
+                </div>
                 <div>
-                  <strong className="text-red">New Competition Published!</strong>
-                  <p className="text-gray mt-1">"{c.name}" is now open for registration. Check the Competitions tab for details.</p>
-                  <span className="text-sm text-gold" style={{ fontSize: '0.8rem', marginTop: '0.5rem', display: 'block' }}>Just Now</span>
+                  <span className="badge-pill badge-new" style={{ marginBottom: '0.5rem' }}>New Event</span>
+                  <h4 className="text-white" style={{ fontSize: '1.2rem' }}>{c.name} is now Published!</h4>
+                  <p className="text-gray mt-1">Open for registration. Check the Competitions tab for details.</p>
+                  <span style={{ fontSize: '0.8rem', marginTop: '0.5rem', display: 'block', color: 'var(--color-red)' }}>Just Now</span>
                 </div>
               </li>
             ))}
-            <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '1rem' }}>
-              <AlertCircle className="text-red" size={24} style={{ flexShrink: 0 }} />
+            <li className="card-split animate-slide-up" style={{ padding: '1.5rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+              <div className="card-split-icon glow-red-neon" style={{ background: 'rgba(230, 0, 0, 0.1)' }}>
+                <AlertCircle className="text-red" />
+              </div>
               <div>
-                <strong>Belt Exam Upcoming!</strong>
+                <span className="badge-pill badge-popular" style={{ marginBottom: '0.5rem' }}>Urgent</span>
+                <h4 className="text-white" style={{ fontSize: '1.2rem' }}>Belt Exam Upcoming!</h4>
                 <p className="text-gray mt-1">Make sure you are prepared for the grading exam on May 25th.</p>
-                <span className="text-sm text-gold" style={{ fontSize: '0.8rem', marginTop: '0.5rem', display: 'block' }}>2 Days Ago</span>
-              </div>
-            </li>
-            <li style={{ padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', gap: '1rem' }}>
-              <Award className="text-gold" size={24} style={{ flexShrink: 0 }} />
-              <div>
-                <strong>State Level Tournament</strong>
-                <p className="text-gray mt-1">Registrations are open for the Bangalore Open Karate Championship.</p>
-                <span className="text-sm text-gold" style={{ fontSize: '0.8rem', marginTop: '0.5rem', display: 'block' }}>1 Week Ago</span>
-              </div>
-            </li>
-            <li style={{ padding: '1rem 0', display: 'flex', gap: '1rem' }}>
-              <Bell className="text-white" size={24} style={{ flexShrink: 0 }} />
-              <div>
-                <strong>Holiday Notice</strong>
-                <p className="text-gray mt-1">Academy will remain closed tomorrow due to public holiday.</p>
-                <span className="text-sm text-gold" style={{ fontSize: '0.8rem', marginTop: '0.5rem', display: 'block' }}>2 Weeks Ago</span>
+                <span className="text-gray" style={{ fontSize: '0.8rem', marginTop: '0.5rem', display: 'block' }}>2 Days Ago</span>
               </div>
             </li>
           </ul>
@@ -392,50 +383,52 @@ const StudentDashboard = () => {
       <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Upcoming Competitions</h3>
       <div className="dash-grid-4 grid-cols-2">
         {Array.isArray(competitions) && competitions.map(c => (
-          <div key={c.id} className="dash-card competition-card animate-fade-in" style={{ borderTop: '4px solid var(--color-red)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
-              <h4 style={{ fontSize: '1.3rem' }}>{c.name}</h4>
-              <span className={`status-badge ${c.status === 'Upcoming' ? 'status-paid' : 'status-pending'}`} style={{ height: 'fit-content' }}>
-                {c.status}
-              </span>
+          <div key={c.id} className="premium-card card-gradient-border card-3d animate-slide-up" style={{ padding: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem', alignItems: 'flex-start' }}>
+              <div>
+                <span className="badge-pill badge-upcoming" style={{ marginBottom: '0.5rem' }}>{c.status}</span>
+                <h4 style={{ fontSize: '1.5rem', marginTop: '0.5rem' }}>{c.name}</h4>
+              </div>
+              <div className="stat-icon-glow"><Trophy size={32} /></div>
             </div>
             
-            <div className="comp-info" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
-              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-gray)' }}>
-                <Calendar size={14} className="text-gold" /> {c.date}
+            <div className="comp-info" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem', marginBottom: '2rem', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px' }}>
+              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-white)' }}>
+                <Calendar size={14} className="text-red" /> {c.date}
               </div>
-              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-gray)' }}>
-                <MapPin size={14} className="text-gold" /> {c.location}
+              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-white)' }}>
+                <MapPin size={14} className="text-red" /> {c.location}
               </div>
-              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-gray)' }}>
-                <Award size={14} className="text-gold" /> {c.category}
+              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-white)' }}>
+                <Award size={14} className="text-red" /> {c.category}
               </div>
-              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-gray)' }}>
-                <IndianRupee size={14} className="text-gold" /> ₹{c.fee}
+              <div className="info-item-small" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem', color: 'var(--color-white)' }}>
+                <IndianRupee size={14} className="text-red" /> ₹{c.fee}
               </div>
             </div>
 
-            <p className="text-gray mb-4" style={{ fontSize: '0.95rem', lineHeight: 1.6 }}>{c.description}</p>
+            <p className="text-gray mb-4" style={{ fontSize: '0.95rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>{c.description}</p>
             
-            <div className="deadline-box" style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ fontSize: '0.85rem' }}>
-                <p className="text-gray">Registration Ends:</p>
+            <div className="deadline-box card-glass" style={{ padding: '1.2rem', borderRadius: '12px', marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ fontSize: '0.9rem' }}>
+                <p className="text-gray" style={{ marginBottom: '0.3rem' }}>Closing in:</p>
                 <Countdown deadline={c.deadline} />
               </div>
-              <button className="btn-icon" onClick={() => alert('Downloading circular PDF...')} title="Download Circular">
+              <button className="btn-icon glow-gold-neon" onClick={() => alert('Downloading circular PDF...')} title="Download Circular" style={{ width: '45px', height: '45px', borderRadius: '50%' }}>
                 <Download size={20} className="text-gold" />
               </button>
             </div>
 
             {myRegistrations.includes(c.id) ? (
-              <button className="btn btn-outline w-100" disabled style={{ borderColor: '#00cc00', color: '#00cc00', opacity: 0.8 }}>
-                <CheckCircle size={18} /> Registered
+              <button className="btn btn-outline w-100" disabled style={{ borderColor: '#00cc00', color: '#00cc00', opacity: 1, background: 'rgba(0,204,0,0.05)' }}>
+                <CheckCircle size={18} /> Already Registered
               </button>
             ) : (
               <button 
                 className="btn btn-primary w-100" 
                 onClick={() => handleCompRegister(c.id)}
                 disabled={c.status !== 'Upcoming' || new Date(c.deadline) < new Date()}
+                style={{ boxShadow: '0 10px 20px rgba(230,0,0,0.2)' }}
               >
                 Register Now
               </button>

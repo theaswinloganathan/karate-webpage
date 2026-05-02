@@ -148,40 +148,44 @@ const MasterDashboard = () => {
     <div className="dash-content-area">
       <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Overview</h3>
       <div className="dash-grid-4">
-        <div className="dash-card stat-card">
-          <div className="stat-icon"><Users size={30} /></div>
+      <div className="dash-grid-4">
+        <div className="dash-card-premium card-3d animate-slide-up">
+          <div className="stat-icon-glow"><Users size={30} /></div>
           <div>
             <h4>Total Students</h4>
             <h2>{students.length}</h2>
           </div>
         </div>
-        <div className="dash-card stat-card">
-          <div className="stat-icon text-green" style={{ color: '#00cc00' }}><IndianRupee size={30} /></div>
+        <div className="dash-card-premium card-3d animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          <div className="stat-icon-glow" style={{ filter: 'drop-shadow(0 0 10px #00cc00)' }}><IndianRupee size={30} style={{ color: '#00cc00' }}/></div>
           <div>
             <h4>Fees Paid</h4>
             <h2>{Array.isArray(fees) ? fees.filter(f => f.status === 'paid').length : 0}</h2>
           </div>
         </div>
-        <div className="dash-card stat-card">
-          <div className="stat-icon text-red"><XCircle size={30} /></div>
+        <div className="dash-card-premium card-3d glow-red-neon animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="stat-icon-glow"><XCircle size={30} /></div>
           <div>
             <h4>Fees Pending</h4>
             <h2>{Array.isArray(fees) ? fees.filter(f => f.status !== 'paid').length : 0}</h2>
           </div>
         </div>
-        <div className="dash-card stat-card">
-          <div className="stat-icon text-gold"><CalendarCheck size={30} /></div>
+        <div className="dash-card-premium card-3d animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <div className="stat-icon-glow" style={{ filter: 'drop-shadow(0 0 10px var(--color-gold))' }}><CalendarCheck size={30} className="text-gold" /></div>
           <div>
             <h4>Today Attendance</h4>
             <h2>85%</h2>
           </div>
         </div>
       </div>
+      </div>
       
-      <div className="dash-card mt-4" style={{ marginTop: '2rem' }}>
-        <h4 className="mb-3 text-gold" style={{ marginBottom: '1rem' }}>Upcoming Belt Test</h4>
-        <p className="text-gray">Next grading examination is scheduled for <strong>25th May 2026</strong>. 12 students are eligible.</p>
-        <button className="btn btn-outline btn-sm mt-3" style={{ marginTop: '1rem' }}>View Eligible Students</button>
+      <div className="premium-card card-gradient-border mt-4 animate-slide-up" style={{ marginTop: '2rem', animationDelay: '0.4s' }}>
+        <h4 className="mb-3 text-gold" style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Award size={20} /> Upcoming Belt Test
+        </h4>
+        <p className="text-gray" style={{ lineHeight: '1.6' }}>Next grading examination is scheduled for <strong>25th May 2026</strong>. 12 students have met the training hours criteria.</p>
+        <button className="btn btn-primary btn-sm mt-3" style={{ marginTop: '1.5rem' }}>View Eligible Students</button>
       </div>
     </div>
   );
@@ -540,24 +544,33 @@ const MasterDashboard = () => {
         {Array.isArray(competitions) && competitions.map(c => {
           const registered = JSON.parse(localStorage.getItem('comp_regs_' + c.id) || '[]');
           return (
-            <div key={c.id} className="dash-card" style={{ position: 'relative', borderTop: c.status === 'Upcoming' ? '4px solid var(--color-gold)' : '4px solid var(--color-gray)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <h4 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', paddingRight: '2rem' }}>{c.name}</h4>
-                <div style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', gap: '0.5rem' }}>
-                  <button className="btn-icon" onClick={() => { setCompForm(c); setShowAddComp(true); window.scrollTo(0, 0); }}><Edit size={16} /></button>
-                  <button className="btn-icon text-red" onClick={() => handleDeleteComp(c.id)}><Trash2 size={16} /></button>
+            <div key={c.id} className={`premium-card card-gradient-border animate-slide-up ${c.status === 'Upcoming' ? 'glow-gold-neon' : ''}`} style={{ padding: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                <div>
+                  <span className={`badge-pill ${c.status === 'Upcoming' ? 'badge-upcoming' : 'badge-popular'}`} style={{ marginBottom: '0.5rem' }}>{c.status}</span>
+                  <h4 style={{ fontSize: '1.4rem', marginTop: '0.5rem' }}>{c.name}</h4>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button className="btn-icon" onClick={() => { setCompForm(c); setShowAddComp(true); window.scrollTo(0, 0); }}><Edit size={18} /></button>
+                  <button className="btn-icon text-red" onClick={() => handleDeleteComp(c.id)}><Trash2 size={18} /></button>
                 </div>
               </div>
-              <p className="text-gray mb-2" style={{ fontSize: '0.9rem' }}><CalendarCheck size={14} style={{ display: 'inline', marginRight: '4px' }}/> {c.date} | {c.location}</p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
-                <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.8rem' }}>{c.category}</span>
-                <span className="badge" style={{ background: 'rgba(212, 175, 55, 0.1)', color: 'var(--color-gold)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.8rem' }}>Fee: ₹{c.fee}</span>
-                <span className="badge" style={{ background: c.status === 'Upcoming' ? 'rgba(0,204,0,0.1)' : 'rgba(230,0,0,0.1)', color: c.status === 'Upcoming' ? '#00cc00' : 'var(--color-red)', padding: '0.2rem 0.5rem', borderRadius: '4px', fontSize: '0.8rem' }}>{c.status}</span>
+              
+              <div style={{ padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem' }}>
+                <p className="text-gray" style={{ fontSize: '0.85rem' }}><Calendar size={14} className="text-red" /> {c.date}</p>
+                <p className="text-gray" style={{ fontSize: '0.85rem' }}><MapPin size={14} className="text-red" /> {c.location}</p>
+                <p className="text-gray" style={{ fontSize: '0.85rem' }}><Award size={14} className="text-red" /> {c.category}</p>
+                <p className="text-gold" style={{ fontSize: '0.85rem' }}>₹{c.fee}</p>
               </div>
-              <p className="text-gray mb-3" style={{ fontSize: '0.9rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{c.description}</p>
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="text-gold" style={{ fontSize: '0.9rem' }}><Users size={14} style={{ display: 'inline' }}/> {registered.length} Registered</span>
-                <button className="btn btn-outline btn-sm" onClick={() => alert(`Registered Students: \n${registered.length > 0 ? registered.join(', ') : 'None yet'}`)}>View List</button>
+
+              <p className="text-gray mb-4" style={{ fontSize: '0.9rem', lineHeight: 1.6, height: '3rem', overflow: 'hidden' }}>{c.description}</p>
+              
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                   <div className="stat-icon-glow" style={{ fontSize: '1.2rem' }}><Users size={16} /></div>
+                   <span className="text-white font-bold">{registered.length} Registered</span>
+                </div>
+                <button className="btn btn-outline btn-sm" onClick={() => alert(`Registered Students: \n${registered.length > 0 ? registered.join(', ') : 'None yet'}`)}>View Full List</button>
               </div>
             </div>
           );
@@ -604,24 +617,24 @@ const MasterDashboard = () => {
     <div className="dash-content-area">
       <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Generate Reports</h3>
       <div className="dash-grid-4">
-        <div className="dash-card text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          <Users size={40} className="text-red" />
-          <h4>Student Report</h4>
+        <div className="premium-card card-3d text-center">
+          <div className="stat-icon-glow" style={{ marginBottom: '1rem' }}><Users size={40} /></div>
+          <h4 style={{ marginBottom: '1rem' }}>Student Roster</h4>
           <button className="btn btn-outline w-100 btn-sm" onClick={() => alert('Downloading Student Report...')}>Download PDF</button>
         </div>
-        <div className="dash-card text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          <CalendarCheck size={40} className="text-red" />
-          <h4>Attendance Report</h4>
+        <div className="premium-card card-3d text-center">
+          <div className="stat-icon-glow" style={{ marginBottom: '1rem', filter: 'drop-shadow(0 0 10px #00cc00)' }}><CalendarCheck size={40} style={{ color: '#00cc00' }} /></div>
+          <h4 style={{ marginBottom: '1rem' }}>Attendance Stats</h4>
           <button className="btn btn-outline w-100 btn-sm" onClick={() => alert('Downloading Attendance Report...')}>Download Excel</button>
         </div>
-        <div className="dash-card text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          <IndianRupee size={40} className="text-red" />
-          <h4>Fees Report</h4>
+        <div className="premium-card card-3d text-center">
+          <div className="stat-icon-glow" style={{ marginBottom: '1rem', filter: 'drop-shadow(0 0 10px var(--color-gold))' }}><IndianRupee size={40} className="text-gold" /></div>
+          <h4 style={{ marginBottom: '1rem' }}>Finance Ledger</h4>
           <button className="btn btn-outline w-100 btn-sm" onClick={() => alert('Downloading Fees Report...')}>Download Excel</button>
         </div>
-        <div className="dash-card text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          <Award size={40} className="text-red" />
-          <h4>Belt Progress</h4>
+        <div className="premium-card card-3d text-center">
+          <div className="stat-icon-glow" style={{ marginBottom: '1rem' }}><Award size={40} /></div>
+          <h4 style={{ marginBottom: '1rem' }}>Grading Log</h4>
           <button className="btn btn-outline w-100 btn-sm" onClick={() => alert('Downloading Progress Report...')}>Download PDF</button>
         </div>
       </div>
