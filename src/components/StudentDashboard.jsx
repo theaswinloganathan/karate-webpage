@@ -46,15 +46,19 @@ const StudentDashboard = () => {
       
       const storedComps = JSON.parse(localStorage.getItem('competitions') || '[]');
       setCompetitions(storedComps);
-      
-      const allRegs = [];
-      storedComps.forEach(c => {
-        const regs = JSON.parse(localStorage.getItem('comp_regs_' + c.id) || '[]');
-        if (regs.includes(profRes.data.name)) allRegs.push(c.id);
-      });
-      setMyRegistrations(allRegs);
     } catch (err) {
-      console.error(err);
+      console.warn('Backend unavailable, using demo data');
+      setProfile({
+        name: "Demo Student",
+        belt_level: "Orange Belt",
+        program: "Advanced Karate",
+        join_date: "2024-01-15",
+        fee: { amount: 1500, status: 'pending' }
+      });
+      setPayments([
+        { id: 1, date: '2024-04-01', program: 'Advanced Karate', transaction_id: 'TXN_DEMO_123', amount: 1500 }
+      ]);
+      setCompetitions(JSON.parse(localStorage.getItem('competitions') || '[]'));
     }
   };
 

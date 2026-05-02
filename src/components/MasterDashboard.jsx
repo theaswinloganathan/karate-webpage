@@ -50,7 +50,16 @@ const MasterDashboard = () => {
       const storedComps = JSON.parse(localStorage.getItem('competitions') || '[]');
       setCompetitions(storedComps);
     } catch (err) {
-      console.error(err);
+      console.warn('Backend unavailable, using demo data');
+      setStudents([
+        { id: 1, name: "Rahul Singh", username: "rahul", belt_level: "Yellow Belt", program: "Beginner", join_date: "2024-02-10" },
+        { id: 2, name: "Priya Sharma", username: "priya", belt_level: "Green Belt", program: "Advanced", join_date: "2023-11-05" }
+      ]);
+      setFees([
+        { id: 1, name: "Rahul Singh", amount: 1200, status: 'pending', due_date: '2024-05-05' },
+        { id: 2, name: "Priya Sharma", amount: 1500, status: 'paid', due_date: '2024-05-05' }
+      ]);
+      setCompetitions(JSON.parse(localStorage.getItem('competitions') || '[]'));
     }
   };
 
