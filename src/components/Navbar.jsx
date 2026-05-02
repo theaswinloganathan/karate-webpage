@@ -25,9 +25,6 @@ const Navbar = () => {
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-      <div style={{ background: 'var(--color-red)', color: 'white', textAlign: 'center', padding: '0.5rem', fontSize: '0.9rem', fontWeight: 'bold' }}>
-        LATEST UPDATE: Demo Access Enabled! Click Login to try.
-      </div>
       <div className="container nav-container">
         <Link to="/#home" className="logo">
           <span className="text-red">ELITE</span> KARATE
