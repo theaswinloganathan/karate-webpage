@@ -3,14 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.port === '5173') ? 'http://localhost:5000' : '';
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.port === '5173') ? `http://${window.location.hostname}:5000` : '';
 
 const Login = () => {
   const [role, setRole] = useState('student');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [serverStatus, setServerStatus] = useState('checking');
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const checkServer = async () => {
+      try {
+        await axios.get(`${API_URL}/api/students`).catch(e => {
+          // It's okay if this 401s, it means the server is reached
+          if (e.response) setServerStatus('online');
+          else setServerStatus('offline');
+        });
+      } catch (e) {
+        setServerStatus('offline');
+      }
+    };
+    checkServer();
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -49,7 +65,13 @@ const Login = () => {
           <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: '1rem', left: 0, transform: 'none' }}>
             <span className="text-red">Portal</span> Login
           </h2>
-          <p className="text-gray" style={{ textAlign: 'center', marginBottom: '2rem' }}>Sign in to your academy dashboard</p>
+          <p className="text-gray" style={{ textAlign: 'center', marginBottom: '1rem' }}>Sign in to your academy dashboard</p>
+          
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <span className={`status-badge ${serverStatus === 'online' ? 'status-paid' : 'status-pending'}`} style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem' }}>
+              Backend: {serverStatus.toUpperCase()}
+            </span>
+          </div>
           
           <div className="flex gap-2" style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
             <button 
