@@ -125,9 +125,9 @@ const MasterDashboard = () => {
     e.preventDefault();
     let updatedComps;
     if (compForm.id) {
-      updatedComps = competitions.map(c => c.id === compForm.id ? { ...compForm } : c);
+      updatedComps = Array.isArray(competitions) ? competitions.map(c => c.id === compForm.id ? { ...compForm } : c) : [];
     } else {
-      updatedComps = [{ ...compForm, id: Date.now(), created_at: new Date().toISOString() }, ...competitions];
+      updatedComps = [{ ...compForm, id: Date.now(), created_at: new Date().toISOString() }, ...(Array.isArray(competitions) ? competitions : [])];
     }
     setCompetitions(updatedComps);
     localStorage.setItem('competitions', JSON.stringify(updatedComps));
@@ -138,7 +138,7 @@ const MasterDashboard = () => {
 
   const handleDeleteComp = (id) => {
     if (!window.confirm('Delete this competition?')) return;
-    const updatedComps = competitions.filter(c => c.id !== id);
+    const updatedComps = Array.isArray(competitions) ? competitions.filter(c => c.id !== id) : [];
     setCompetitions(updatedComps);
     localStorage.setItem('competitions', JSON.stringify(updatedComps));
   };
@@ -159,14 +159,14 @@ const MasterDashboard = () => {
           <div className="stat-icon text-green" style={{ color: '#00cc00' }}><IndianRupee size={30} /></div>
           <div>
             <h4>Fees Paid</h4>
-            <h2>{fees.filter(f => f.status === 'paid').length}</h2>
+            <h2>{Array.isArray(fees) ? fees.filter(f => f.status === 'paid').length : 0}</h2>
           </div>
         </div>
         <div className="dash-card stat-card">
           <div className="stat-icon text-red"><XCircle size={30} /></div>
           <div>
             <h4>Fees Pending</h4>
-            <h2>{fees.filter(f => f.status !== 'paid').length}</h2>
+            <h2>{Array.isArray(fees) ? fees.filter(f => f.status !== 'paid').length : 0}</h2>
           </div>
         </div>
         <div className="dash-card stat-card">
@@ -268,7 +268,7 @@ const MasterDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.map(s => (
+              {Array.isArray(filteredStudents) && filteredStudents.map(s => (
                 <tr key={s.id}>
                   <td className="font-bold">{s.name}</td>
                   <td>{s.username || 'N/A'}</td>
@@ -335,7 +335,7 @@ const MasterDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map(s => (
+              {Array.isArray(students) && students.map(s => (
                 <tr key={s.id}>
                   <td>{s.name}</td>
                   <td>{s.belt_level}</td>
@@ -377,7 +377,7 @@ const MasterDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {fees.map(f => (
+              {Array.isArray(fees) && fees.map(f => (
                 <tr key={f.id}>
                   <td className="font-bold">{f.name}</td>
                   <td>₹{f.amount}</td>
@@ -425,7 +425,7 @@ const MasterDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map(s => (
+              {Array.isArray(students) && students.map(s => (
                 <tr key={s.id}>
                   <td className="font-bold">{s.name}</td>
                   <td>
@@ -537,7 +537,7 @@ const MasterDashboard = () => {
       )}
 
       <div className="dash-grid-4 grid-cols-2">
-        {competitions.map(c => {
+        {Array.isArray(competitions) && competitions.map(c => {
           const registered = JSON.parse(localStorage.getItem('comp_regs_' + c.id) || '[]');
           return (
             <div key={c.id} className="dash-card" style={{ position: 'relative', borderTop: c.status === 'Upcoming' ? '4px solid var(--color-gold)' : '4px solid var(--color-gray)' }}>
