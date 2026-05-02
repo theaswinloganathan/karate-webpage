@@ -6,28 +6,28 @@ const courses = [
     title: 'Kids Karate',
     age: '5-12 Years',
     desc: 'Fun, engaging classes that teach respect, focus, and basic motor skills.',
-    image: 'https://picsum.photos/seed/kids/800/600',
+    image: 'https://images.pexels.com/photos/7045488/pexels-photo-7045488.jpeg?auto=compress&cs=tinysrgb&w=1260',
     color: 'white'
   },
   {
     title: 'Beginner Training',
     age: '13+ Years',
     desc: 'Foundational techniques, stances, and fitness conditioning for new students.',
-    image: 'https://picsum.photos/seed/beginner/800/600',
+    image: 'https://images.pexels.com/photos/7990068/pexels-photo-7990068.jpeg?auto=compress&cs=tinysrgb&w=1260',
     color: 'yellow'
   },
   {
     title: 'Advanced Karate',
     age: 'All Ages',
     desc: 'Advanced katas, sparring (kumite), and weapons training for senior belts.',
-    image: 'https://picsum.photos/seed/advanced/800/600',
+    image: 'https://images.pexels.com/photos/10655516/pexels-photo-10655516.jpeg?auto=compress&cs=tinysrgb&w=1260',
     color: 'black'
   },
   {
     title: 'Self-Defense',
     age: 'Adults',
     desc: 'Practical, real-world self-defense techniques and situational awareness.',
-    image: 'https://picsum.photos/seed/defense/800/600',
+    image: 'https://images.pexels.com/photos/10752027/pexels-photo-10752027.jpeg?auto=compress&cs=tinysrgb&w=1260',
     color: 'red'
   }
 ];

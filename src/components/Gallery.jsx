@@ -2,12 +2,12 @@ import React from 'react';
 
 const Gallery = () => {
   const images = [
-    'https://picsum.photos/seed/karate1/800/600',
-    'https://picsum.photos/seed/karate2/800/600',
-    'https://picsum.photos/seed/karate3/800/600',
-    'https://picsum.photos/seed/martial1/800/600',
-    'https://picsum.photos/seed/martial2/800/600',
-    'https://picsum.photos/seed/karate4/800/600',
+    'https://images.pexels.com/photos/5088308/pexels-photo-5088308.jpeg?auto=compress&cs=tinysrgb&w=1260',
+    'https://images.pexels.com/photos/6005470/pexels-photo-6005470.jpeg?auto=compress&cs=tinysrgb&w=1260',
+    'https://images.pexels.com/photos/19471300/pexels-photo-19471300.jpeg?auto=compress&cs=tinysrgb&w=1260',
+    'https://images.pexels.com/photos/7045598/pexels-photo-7045598.jpeg?auto=compress&cs=tinysrgb&w=1260',
+    'https://images.pexels.com/photos/8042000/pexels-photo-8042000.jpeg?auto=compress&cs=tinysrgb&w=1260',
+    'https://images.pexels.com/photos/8041991/pexels-photo-8041991.jpeg?auto=compress&cs=tinysrgb&w=1260',
   ];
 
   return (
