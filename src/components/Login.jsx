@@ -16,9 +16,17 @@ const Login = () => {
     e.preventDefault();
     const cleanUsername = username.trim();
     const cleanPassword = password.trim();
-    console.log('Attempting login to:', `${API_URL}/api/login`, { username: cleanUsername });
+    setError('');
+
+    console.log(`Attempting login for ${cleanUsername} as ${role}`);
+
     try {
-      const res = await axios.post(`${API_URL}/api/login`, { username: cleanUsername, password: cleanPassword });
+      const res = await axios.post(`${API_URL}/api/login`, { 
+        username: cleanUsername, 
+        password: cleanPassword,
+        role: role 
+      });
+      
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       
@@ -29,7 +37,8 @@ const Login = () => {
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError(err.response?.data?.error || 'Login failed. Please check your credentials.');
+      const msg = err.response?.data?.error || 'Login failed. Please check your network connection.';
+      setError(msg);
     }
   };
 

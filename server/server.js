@@ -71,12 +71,12 @@ db.serialize(() => {
     FOREIGN KEY(student_id) REFERENCES students(id)
   )`);
 
-  // Force reset/ensure default accounts
+  // Force reset/ensure default accounts for testing
   const masterHash = bcrypt.hashSync('master123', 10);
   db.run("INSERT OR REPLACE INTO users (id, username, password, role) VALUES (1, 'master', ?, 'master')", [masterHash]);
   
-  const meeHash = bcrypt.hashSync('123456', 10);
-  db.run("INSERT OR REPLACE INTO users (id, username, password, role, student_id) VALUES (3, 'mee', ?, 'student', 3)", [meeHash]);
+  const studentHash = bcrypt.hashSync('student123', 10);
+  db.run("INSERT OR REPLACE INTO users (id, username, password, role, student_id) VALUES (4, 'student', ?, 'student', 1)", [studentHash]); // student_id 1 exists or will be created
 });
 
 // Middleware
@@ -99,22 +99,25 @@ const isMaster = (req, res, next) => {
 
 // --- AUTH ROUTES ---
 app.post('/api/login', (req, res) => {
-  const { username, password } = req.body;
-  console.log('Login attempt for username:', username);
-  db.get("SELECT * FROM users WHERE username = ?", [username], (err, user) => {
-    if (err) {
-      console.error('DB Error:', err.message);
-      return res.status(500).json({ error: 'Database error' });
-    }
+  const { username, password, role } = req.body;
+  const cleanUsername = username.trim().toLowerCase();
+  
+  console.log(`Login attempt: ${cleanUsername} as ${role}`);
+  
+  db.get("SELECT * FROM users WHERE LOWER(username) = ?", [cleanUsername], (err, user) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    
     if (!user) {
-      console.log('User not found:', username);
       return res.status(400).json({ error: 'User not found' });
+    }
+    
+    if (user.role !== role) {
+      return res.status(400).json({ error: `User found but not as a ${role}. Check your role selection.` });
     }
     
     const validPass = bcrypt.compareSync(password, user.password);
     if (!validPass) {
-      console.log('Invalid password for user:', username);
-      return res.status(400).json({ error: 'Invalid password' });
+      return res.status(400).json({ error: 'Wrong password' });
     }
 
     const token = jwt.sign({ id: user.id, role: user.role, student_id: user.student_id }, process.env.JWT_SECRET || 'secret');
