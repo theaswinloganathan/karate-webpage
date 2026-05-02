@@ -7,7 +7,7 @@ import {
   UserPlus, Edit, Trash2, LogOut, Award, Clock, Trophy, Upload
 } from 'lucide-react';
 
-const API_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : '';
+const API_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
 
 const MasterDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
