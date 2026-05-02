@@ -28,7 +28,7 @@ const Login = () => {
             Select a portal to enter directly (No password required for demo)
           </p>
           
-          <div className="grid grid-cols-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+          <div className="demo-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
             <div 
               className="demo-login-box" 
               onClick={() => handleDemoLogin('master')}
