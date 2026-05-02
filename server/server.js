@@ -7,7 +7,10 @@ const jwt = require('jsonwebtoken');
 const Razorpay = require('razorpay');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: true, // Allow all origins in dev
+  credentials: true
+}));
 app.use(express.json());
 
 // Initialize Razorpay
@@ -68,15 +71,12 @@ db.serialize(() => {
     FOREIGN KEY(student_id) REFERENCES students(id)
   )`);
 
-  // Insert default master if not exists
-  db.get("SELECT * FROM users WHERE username = 'master'", (err, row) => {
-    if (!row) {
-      const hash = bcrypt.hashSync('master123', 10);
-      db.run("INSERT OR IGNORE INTO users (username, password, role) VALUES (?, ?, ?)", ['master', hash, 'master'], (insertErr) => {
-        if (insertErr) console.error("Error inserting default master:", insertErr.message);
-      });
-    }
-  });
+  // Force reset/ensure default accounts
+  const masterHash = bcrypt.hashSync('master123', 10);
+  db.run("INSERT OR REPLACE INTO users (id, username, password, role) VALUES (1, 'master', ?, 'master')", [masterHash]);
+  
+  const meeHash = bcrypt.hashSync('123456', 10);
+  db.run("INSERT OR REPLACE INTO users (id, username, password, role, student_id) VALUES (3, 'mee', ?, 'student', 3)", [meeHash]);
 });
 
 // Middleware
