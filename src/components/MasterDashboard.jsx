@@ -61,10 +61,12 @@ const MasterDashboard = () => {
 
   const handleAddStudent = async (e) => {
     e.preventDefault();
+    const cleanUsername = username.trim();
+    const cleanPassword = password.trim();
     try {
       const token = localStorage.getItem('token');
       await axios.post(`${API_URL}/api/students`, 
-        { name, belt_level: belt, program, username, password },
+        { name, belt_level: belt, program, username: cleanUsername, password: cleanPassword },
         { headers: { Authorization: token } }
       );
       setShowAdd(false);
@@ -246,6 +248,7 @@ const MasterDashboard = () => {
             <thead>
               <tr>
                 <th>Name</th>
+                <th>Username</th>
                 <th>Program</th>
                 <th>Belt Level</th>
                 <th>Joined</th>
@@ -256,6 +259,7 @@ const MasterDashboard = () => {
               {filteredStudents.map(s => (
                 <tr key={s.id}>
                   <td className="font-bold">{s.name}</td>
+                  <td>{s.username || 'N/A'}</td>
                   <td>{s.program}</td>
                   <td>
                     <span className={`belt-badge belt-${s.belt_level.split(' ')[0].toLowerCase()}`}>
@@ -282,7 +286,7 @@ const MasterDashboard = () => {
                 </tr>
               ))}
               {filteredStudents.length === 0 && (
-                <tr><td colSpan="5" className="text-center text-gray py-4">No students found.</td></tr>
+                <tr><td colSpan="6" className="text-center text-gray py-4">No students found.</td></tr>
               )}
             </tbody>
           </table>

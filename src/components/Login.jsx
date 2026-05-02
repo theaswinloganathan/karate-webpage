@@ -14,8 +14,10 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const cleanUsername = username.trim();
+    const cleanPassword = password.trim();
     try {
-      const res = await axios.post(`${API_URL}/api/login`, { username, password });
+      const res = await axios.post(`${API_URL}/api/login`, { username: cleanUsername, password: cleanPassword });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
       

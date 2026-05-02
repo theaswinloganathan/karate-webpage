@@ -113,7 +113,7 @@ app.post('/api/login', (req, res) => {
 
 // --- MASTER ROUTES ---
 app.get('/api/students', auth, isMaster, (req, res) => {
-  db.all("SELECT * FROM students", [], (err, rows) => {
+  db.all("SELECT students.*, users.username FROM students LEFT JOIN users ON students.id = users.student_id", [], (err, rows) => {
     res.json(rows);
   });
 });
