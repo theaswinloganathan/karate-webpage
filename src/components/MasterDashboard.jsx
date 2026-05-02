@@ -115,11 +115,11 @@ const MasterDashboard = () => {
   };
 
   // Filter students based on search and program
-  const filteredStudents = (students || []).filter(s => {
+  const filteredStudents = Array.isArray(students) ? students.filter(s => {
     const nameMatch = s.name ? s.name.toLowerCase().includes(searchTerm.toLowerCase()) : false;
     const matchProgram = filterProgram ? s.program === filterProgram : true;
     return nameMatch && matchProgram;
-  });
+  }) : [];
 
   const handleSaveCompetition = (e) => {
     e.preventDefault();

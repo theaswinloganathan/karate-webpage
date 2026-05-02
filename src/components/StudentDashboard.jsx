@@ -335,11 +335,11 @@ const StudentDashboard = () => {
   );
 
   const renderNotifications = () => {
-    const recentComps = competitions.filter(c => {
+    const recentComps = Array.isArray(competitions) ? competitions.filter(c => {
       const created = new Date(c.created_at);
       const now = new Date();
       return (now - created) < (24 * 60 * 60 * 1000); // Last 24 hours
-    });
+    }) : [];
 
     return (
       <div className="dash-content-area">
@@ -390,7 +390,7 @@ const StudentDashboard = () => {
     <div className="dash-content-area">
       <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Upcoming Competitions</h3>
       <div className="dash-grid-4 grid-cols-2">
-        {competitions.map(c => (
+        {Array.isArray(competitions) && competitions.map(c => (
           <div key={c.id} className="dash-card competition-card animate-fade-in" style={{ borderTop: '4px solid var(--color-red)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
               <h4 style={{ fontSize: '1.3rem' }}>{c.name}</h4>
@@ -441,7 +441,7 @@ const StudentDashboard = () => {
             )}
           </div>
         ))}
-        {competitions.length === 0 && <p className="text-gray">No new competition circulars available at the moment.</p>}
+        {(!Array.isArray(competitions) || competitions.length === 0) && <p className="text-gray">No new competition circulars available at the moment.</p>}
       </div>
     </div>
   );
