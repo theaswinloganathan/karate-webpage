@@ -274,7 +274,7 @@ const MasterDashboard = () => {
                   <td>{s.username || 'N/A'}</td>
                   <td>{s.program}</td>
                   <td>
-                    <span className={`belt-badge belt-${s.belt_level.split(' ')[0].toLowerCase()}`}>
+                    <span className={`belt-badge belt-${(s.belt_level || 'White').split(' ')[0].toLowerCase()}`}>
                       {s.belt_level}
                     </span>
                   </td>
@@ -429,7 +429,7 @@ const MasterDashboard = () => {
                 <tr key={s.id}>
                   <td className="font-bold">{s.name}</td>
                   <td>
-                    <span className={`belt-badge belt-${s.belt_level.split(' ')[0].toLowerCase()}`}>
+                    <span className={`belt-badge belt-${(s.belt_level || 'White').split(' ')[0].toLowerCase()}`}>
                       {s.belt_level}
                     </span>
                   </td>

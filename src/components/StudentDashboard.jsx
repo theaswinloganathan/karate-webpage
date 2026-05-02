@@ -215,9 +215,10 @@ const StudentDashboard = () => {
 
   const renderBeltProgress = () => {
     const belts = ['White Belt', 'Yellow Belt', 'Orange Belt', 'Green Belt', 'Blue Belt', 'Brown Belt', 'Black Belt'];
-    const currentIndex = belts.indexOf(profile.belt_level) || 0;
-    const nextBelt = currentIndex < belts.length - 1 ? belts[currentIndex + 1] : 'Mastery Level';
-    const progressPercent = currentIndex < belts.length - 1 ? 65 : 100;
+    const currentBelt = profile?.belt_level || 'White Belt';
+    const currentIndex = belts.indexOf(currentBelt);
+    const nextBelt = (currentIndex !== -1 && currentIndex < belts.length - 1) ? belts[currentIndex + 1] : 'Mastery Level';
+    const progressPercent = (currentIndex !== -1 && currentIndex < belts.length - 1) ? 65 : 100;
 
     return (
       <div className="dash-content-area">
@@ -227,10 +228,10 @@ const StudentDashboard = () => {
           <div className="dash-card text-center" style={{ padding: '3rem 1rem', background: 'rgba(255,255,255,0.03)' }}>
             <h4 className="text-gray" style={{ marginBottom: '1rem' }}>Current Belt</h4>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <div className={`belt-badge belt-${profile.belt_level.split(' ')[0].toLowerCase()}`} style={{ fontSize: '1.2rem', padding: '0.5rem 1.5rem', marginBottom: '1rem' }}>
-                {profile.belt_level}
+              <div className={`belt-badge belt-${(profile?.belt_level || 'White').split(' ')[0].toLowerCase()}`} style={{ fontSize: '1.2rem', padding: '0.5rem 1.5rem', marginBottom: '1rem' }}>
+                {profile?.belt_level || 'White Belt'}
               </div>
-              <h2 style={{ fontSize: '2.5rem', color: '#fff' }}>{profile.belt_level}</h2>
+              <h2 style={{ fontSize: '2.5rem', color: '#fff' }}>{profile?.belt_level || 'White Belt'}</h2>
             </div>
           </div>
           <div className="dash-card text-center" style={{ padding: '3rem 1rem', border: '1px solid var(--color-gold)' }}>
@@ -293,7 +294,7 @@ const StudentDashboard = () => {
               <tr><th>Date</th><th>Program</th><th>Transaction ID</th><th>Amount</th><th>Receipt</th></tr>
             </thead>
             <tbody>
-              {payments.map(p => (
+              {Array.isArray(payments) && payments.map(p => (
                 <tr key={p.id}>
                   <td>{new Date(p.date).toLocaleDateString()}</td>
                   <td>{p.program}</td>
@@ -306,7 +307,7 @@ const StudentDashboard = () => {
                   </td>
                 </tr>
               ))}
-              {payments.length === 0 && <tr><td colSpan="5" className="text-center text-gray py-4">No payments found.</td></tr>}
+              {(!Array.isArray(payments) || payments.length === 0) && <tr><td colSpan="5" className="text-center text-gray py-4">No payments found.</td></tr>}
             </tbody>
           </table>
         </div>
