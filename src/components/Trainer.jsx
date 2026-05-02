@@ -1,5 +1,5 @@
 import React from 'react';
-import masterImg from '../assets/me.jpg';
+import masterImg from '../assets/sensei.png';
 
 const Trainer = () => {
   return (
@@ -12,7 +12,7 @@ const Trainer = () => {
           <div className="trainer-image-col">
             <img 
               src={masterImg} 
-              alt="Head Master" 
+              alt="Sensei Rajat Sharma" 
               className="trainer-img"
             />
           </div>
