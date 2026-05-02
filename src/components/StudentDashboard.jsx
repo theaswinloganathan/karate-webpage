@@ -59,6 +59,7 @@ const StudentDashboard = () => {
         { id: 1, date: '2024-04-01', program: 'Advanced Karate', transaction_id: 'TXN_DEMO_123', amount: 1500 }
       ]);
       setCompetitions(JSON.parse(localStorage.getItem('competitions') || '[]'));
+      setMyRegistrations([]);
     }
   };
 
@@ -223,9 +224,14 @@ const StudentDashboard = () => {
         <h3 className="text-gold mb-4" style={{ fontSize: '1.8rem', marginBottom: '1.5rem' }}>Belt Progress</h3>
         
         <div className="dash-grid-4 grid-cols-2" style={{ marginBottom: '2rem' }}>
-          <div className="dash-card text-center" style={{ padding: '3rem 1rem' }}>
-            <h4 className="text-gray">Current Belt</h4>
-            <h2 style={{ fontSize: '2.5rem', marginTop: '1rem', color: 'var(--color-white)' }}>{profile.belt_level}</h2>
+          <div className="dash-card text-center" style={{ padding: '3rem 1rem', background: 'rgba(255,255,255,0.03)' }}>
+            <h4 className="text-gray" style={{ marginBottom: '1rem' }}>Current Belt</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <div className={`belt-badge belt-${profile.belt_level.split(' ')[0].toLowerCase()}`} style={{ fontSize: '1.2rem', padding: '0.5rem 1.5rem', marginBottom: '1rem' }}>
+                {profile.belt_level}
+              </div>
+              <h2 style={{ fontSize: '2.5rem', color: '#fff' }}>{profile.belt_level}</h2>
+            </div>
           </div>
           <div className="dash-card text-center" style={{ padding: '3rem 1rem', border: '1px solid var(--color-gold)' }}>
             <h4 className="text-gold">Next Belt Target</h4>

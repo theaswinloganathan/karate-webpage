@@ -51,13 +51,16 @@ const MasterDashboard = () => {
       setCompetitions(storedComps);
     } catch (err) {
       console.warn('Backend unavailable, using demo data');
-      setStudents([
+      const demoStudents = [
         { id: 1, name: "Rahul Singh", username: "rahul", belt_level: "Yellow Belt", program: "Beginner", join_date: "2024-02-10" },
-        { id: 2, name: "Priya Sharma", username: "priya", belt_level: "Green Belt", program: "Advanced", join_date: "2023-11-05" }
-      ]);
+        { id: 2, name: "Priya Sharma", username: "priya", belt_level: "Green Belt", program: "Advanced", join_date: "2023-11-05" },
+        { id: 3, name: "Student Demo", username: "student", belt_level: "Orange Belt", program: "Kids Program", join_date: "2024-01-15" }
+      ];
+      setStudents(demoStudents);
       setFees([
         { id: 1, name: "Rahul Singh", amount: 1200, status: 'pending', due_date: '2024-05-05' },
-        { id: 2, name: "Priya Sharma", amount: 1500, status: 'paid', due_date: '2024-05-05' }
+        { id: 2, name: "Priya Sharma", amount: 1500, status: 'paid', due_date: '2024-05-05' },
+        { id: 3, name: "Student Demo", amount: 1500, status: 'pending', due_date: '2024-05-05' }
       ]);
       setCompetitions(JSON.parse(localStorage.getItem('competitions') || '[]'));
     }
@@ -112,10 +115,10 @@ const MasterDashboard = () => {
   };
 
   // Filter students based on search and program
-  const filteredStudents = students.filter(s => {
-    const matchSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredStudents = (students || []).filter(s => {
+    const nameMatch = s.name ? s.name.toLowerCase().includes(searchTerm.toLowerCase()) : false;
     const matchProgram = filterProgram ? s.program === filterProgram : true;
-    return matchSearch && matchProgram;
+    return nameMatch && matchProgram;
   });
 
   const handleSaveCompetition = (e) => {
