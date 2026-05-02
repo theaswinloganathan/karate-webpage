@@ -6,7 +6,7 @@ const Hero = () => {
     <section id="home" className="hero">
       <div className="hero-bg">
         <img 
-          src="https://loremflickr.com/1920/1080/karate?lock=1" 
+          src="https://picsum.photos/seed/karate_hero/1920/1080" 
           alt="Karate Master" 
         />
         <div className="hero-overlay"></div>

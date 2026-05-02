@@ -6,6 +6,7 @@ import {
   FileBadge, MessageCircle, LogOut, CheckCircle, XCircle, Download, FileText,
   AlertCircle, ChevronRight, Trophy, MapPin, Calendar, Clock as ClockIcon
 } from 'lucide-react';
+import myPhoto from '../assets/me.jpg';
 
 const loadRazorpay = () => {
   return new Promise((resolve) => {
@@ -443,7 +444,7 @@ const StudentDashboard = () => {
       <div className="dash-grid-4 grid-cols-2 profile-grid" style={{ gap: '2rem', marginBottom: '2rem' }}>
         <div className="dash-card text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: 'var(--color-dark)', border: '2px solid var(--color-red)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', marginBottom: '1rem' }}>
-            <User size={60} className="text-gray" />
+            <img src={myPhoto} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <button className="btn btn-outline btn-sm">Upload Photo</button>
         </div>

@@ -8,7 +8,7 @@ const About = () => {
         <div className="about-grid">
           <div className="about-image-wrapper">
             <img 
-              src="https://loremflickr.com/800/600/martialarts?lock=2" 
+              src="https://picsum.photos/seed/karate_about/800/600" 
               alt="Karate Sensei" 
               className="about-image"
             />

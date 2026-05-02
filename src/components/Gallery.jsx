@@ -2,12 +2,12 @@ import React from 'react';
 
 const Gallery = () => {
   const images = [
-    'https://loremflickr.com/800/600/karate?lock=7',
-    'https://loremflickr.com/800/600/karate?lock=8',
-    'https://loremflickr.com/800/600/karate?lock=9',
-    'https://loremflickr.com/800/600/martialarts?lock=10',
-    'https://loremflickr.com/800/600/martialarts?lock=11',
-    'https://loremflickr.com/800/600/karate?lock=12',
+    'https://picsum.photos/seed/karate1/800/600',
+    'https://picsum.photos/seed/karate2/800/600',
+    'https://picsum.photos/seed/karate3/800/600',
+    'https://picsum.photos/seed/martial1/800/600',
+    'https://picsum.photos/seed/martial2/800/600',
+    'https://picsum.photos/seed/karate4/800/600',
   ];
 
   return (
